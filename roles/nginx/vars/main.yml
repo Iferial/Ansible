@@ -1,0 +1,4 @@
+---
+# vars file for nginx
+dest_folder: "/etc/nginx/conf.d"
+wordpress: "http://192.168.31.80/"

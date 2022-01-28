@@ -1,0 +1,20 @@
+---
+# tasks file for nginx
+- name: Install Nginx
+  apt:
+    name: nginx
+    state: present
+
+- name: Start Web Server
+  service:
+    name: nginx
+    state: started
+    enabled: yes
+
+- name: Upload config file
+  template:
+    src: "nginx.j2"
+    dest: "{{ dest_folder }}/nginx.conf"
+    mode: '0555'
+  notify:
+    - Restart Nginx

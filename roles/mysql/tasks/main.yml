@@ -1,0 +1,19 @@
+---
+# tasks file for mysql
+- name: Install MySQL
+  apt: name={{ item }} update_cache=yes state=latest
+  loop: [ 'mysql-server', 'python3-pymysql', 'php', 'php-mysql' ]
+
+- name: Create Database for Wordpress
+  mysql_db:
+    login_unix_socket: /var/run/mysqld/mysqld.sock
+    name: "{{ mysql_name }}"
+    state: present
+
+- name: Create User for Wordpress Database
+  mysql_user:
+    login_unix_socket: /var/run/mysqld/mysqld.sock
+    name: "{{ mysql_user }}"
+    password: "{{ mysql_password }}"
+    priv: '*.*:ALL,GRANT'
+    state: present

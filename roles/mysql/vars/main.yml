@@ -1,0 +1,5 @@
+---
+# vars file for mysql
+mysql_name: "wordpress"
+mysql_user: "wordpress"
+mysql_password: "password"

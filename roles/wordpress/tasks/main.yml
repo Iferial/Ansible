@@ -1,0 +1,35 @@
+---
+# tasks file for wordpress
+- name: Install prerequisites
+  apt: name=aptitude update_cache=yes state=latest force_apt_get=yes
+
+- name: Install LAMP Packages
+  apt: name={{ item }} update_cache=yes state=latest
+  loop: [ 'apache2', 'mysql-server', 'python3-pymysql', 'php', 'php-mysql', 'libapache2-mod-php' ]
+
+- name: Install PHP Extensions
+  apt: name={{ item }} update_cache=yes state=latest
+  loop: "{{ php_modules }}"
+
+- name: Set ownership
+  file:
+    path: "/var/www/html"
+    state: directory
+    recurse: yes
+    owner: www-data
+    group: www-data
+    mode: '0755'
+
+- name: Download and unpack latest WordPress
+  shell: "wget -c http://wordpress.org/latest.tar.gz && tar -xzvf latest.tar.gz && rsync -av wordpress/* /var/www/html"
+
+- name: Remove html
+  file:
+    path: "/var/www/html/index.html"
+    state: absent
+
+- name: Upload wp-config
+  template:
+    src: "wp-config-sample.j2"
+    dest: "/var/www/html/wp-config-sample.php"
+  notify: Restart Apache

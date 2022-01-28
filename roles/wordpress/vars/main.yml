@@ -1,0 +1,9 @@
+---
+# vars for wordpress
+php_modules: [ 'php-curl', 'php-gd', 'php-mbstring', 'php-xml', 'php-xmlrpc', 'php-soap', 'php-intl', 'php-zip' ]
+
+# vars for MySQL
+mysql_name: "wordpress"
+mysql_user: "wordpress"
+mysql_password: "password"
+mysql_host: "18.192.176.252"

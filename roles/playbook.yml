@@ -1,0 +1,21 @@
+---
+- name: MySQL
+  hosts: mysql
+  become: yes
+
+  roles:
+    - { role: mysql, when: ansible_os_family == 'Debian' }
+
+- name: Wordpress
+  hosts: wordpress
+  become: yes
+
+  roles:
+    - { role: wordpress, when: ansible_os_family == 'Debian' }
+
+- name: Nginx
+  hosts: nginx
+  become: yes
+
+  roles:
+    - { role: nginx, when: ansible_os_family == 'Debian' }
